@@ -3,6 +3,11 @@ var express = require('express');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var flash = require('connect-flash');
+
+var EventEmitter = require('events').EventEmitter;
+var emitter = new EventEmitter();
+emitter.setMaxListeners(50);
+
 var config = require('config-lite')(__dirname);
 var routes = require('./routes');
 var pkg = require('./package');

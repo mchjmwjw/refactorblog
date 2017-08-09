@@ -6,7 +6,12 @@ var checkLogin = require('../middlewares/check').checkLogin;
 
 // GET /posts 所有用户或者特定用户的文章页
 //   eg: GET /posts?author=xxx
-router.get('/', checkLogin, function(req, res, next) {
+router.get('/', checkLogin, function (req, res, next) {
+	res.render('posts');	
+});
+
+// POST /posts 发表一篇文章
+router.post('/', checkLogin, function(req, res, next) {
 	var author = req.session.user._id;
 	var title = req.fields.title;
 	var content = req.fields.content;
@@ -38,11 +43,6 @@ router.get('/', checkLogin, function(req, res, next) {
 			res.redirect(`/posts/${post._id}`);
 		})
 		.catch(next);
-});
-
-// POST /posts 发表一篇文章
-router.post('/', checkLogin, function(req, res, next) {
-    res.send(req.flash());
 });
 
 // GET /posts/create 发表文章页

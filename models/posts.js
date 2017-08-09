@@ -34,4 +34,13 @@ module.exports = {
 	},
 
 	//按创建时间降序获取所有用户文章或者某个特定用户的所有文章
+	getPosts: function getPosts(author) {
+		var query = {};
+		if (author) {
+			query.author = author;				
+		}
+		return Post.find(query).populate({
+			path: 'author', model: 'User'
+		}).sort({ _id: -1 }).addCreateAt().contentToHtml().exec();
+	}
 };
